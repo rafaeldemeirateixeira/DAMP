@@ -1,0 +1,56 @@
+version: "3.2"
+services:
+  php:
+    build: 
+      context: './.docker/php'
+      args:
+        PHP_VERSION: ${PHP_VERSION}
+    restart: unless-stopped
+    networks:
+      - application
+    volumes:
+      - ./:/var/www
+    container_name: "${PHP_NAME}"
+
+  apache:
+    build:
+      context: './.docker/apache'
+      args:
+        APACHE_VERSION: ${APACHE_VERSION}
+    restart: unless-stopped
+    depends_on:
+      - php
+      - mysql
+    networks:
+      - application
+    ports:
+      - "8181:80"
+    volumes:
+      - ./:/var/www
+    container_name: "${APACHE_NAME}"
+
+  mysql:
+    image: mysql:5.7.22
+    env_file:
+      - .env
+    container_name: ${MYSQL_NAME}
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "${MYSQL_PORT}:3306"
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - docker_data:/var/lib/mysql
+    networks:
+      - application
+ 
+networks:
+  application:
+
+volumes:
+  docker_data:
+    driver: local

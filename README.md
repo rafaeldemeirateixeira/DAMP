@@ -1,2 +1,2 @@
-# DAMP
-PHP application environment using Docker, Apache, PHP-fpm and MySql
+# DNAMP
+PHP application environment using Docker, Nginx, Apache, PHP-fpm and MySql

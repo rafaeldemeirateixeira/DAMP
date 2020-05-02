@@ -1,5 +1,5 @@
-ARG APACHE_VERSION
-FROM httpd:${APACHE_VERSION}-alpine
+ARG HTTP_VERSION
+FROM httpd:${HTTP_VERSION}-alpine
 RUN apk update; \
     apk upgrade;
 RUN apk add \

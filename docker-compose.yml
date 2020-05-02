@@ -12,11 +12,11 @@ services:
       - ./:/var/www
     container_name: "${PHP_NAME}"
 
-  apache:
+  http:
     build:
-      context: './.docker/apache'
+      context: ${HTTP_CONTEXT}
       args:
-        APACHE_VERSION: ${APACHE_VERSION}
+        HTTP_VERSION: ${HTTP_VERSION}
     restart: unless-stopped
     depends_on:
       - php
@@ -27,7 +27,7 @@ services:
       - "8181:80"
     volumes:
       - ./:/var/www
-    container_name: "${APACHE_NAME}"
+    container_name: "${HTTP_NAME}"
 
   mysql:
     image: mysql:5.7.22

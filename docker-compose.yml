@@ -24,7 +24,7 @@ services:
     networks:
       - application
     ports:
-      - "8181:80"
+      - "${HTTP_PORT}:80"
     volumes:
       - ./:/var/www
     container_name: "${HTTP_NAME}"
